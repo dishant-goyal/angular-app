@@ -1,0 +1,13 @@
+loggedUser: LoginInt | undefined;
+
+constructor(private router:Router) {
+  const localUser = localStorage.getItem('LoginUsers');
+  if (localUser != null) {
+    this.loggedUser = JSON.parse(localUser);
+    // console.log(this.loggedUser)
+  }
+}
+onLogout(){
+  localStorage.removeItem('LoginUsers');
+  this.router.navigateByUrl('/login')
+}

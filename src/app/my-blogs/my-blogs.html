@@ -1,0 +1,116 @@
+<body>
+
+  <!-- Header -->
+  <div class="profile-header">
+    <div class="profile-container">
+      <!-- <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic"> -->
+      <div class="profile-info">
+        <h2 class="username">{{username}}</h2>
+        <p class="tagline">Welcome to your profile! You can create and edit blogs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Greeting -->
+  <div class="greeting">
+    Hi you can create and edit your blogs.
+  </div>
+
+  <!-- Blog Form -->
+  <div class="form-container">
+    <form #BlogForm="ngForm">
+      <h3>Create Your Own Blog</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="blogname">Blog Name</label>
+          <input type="text" id="blogname" required minlength="5" #blognameRef="ngModel" name="blogname" placeholder="Blog Name" [ngModel]="tempBlog?.blogname">
+          @if(blognameRef.invalid && blognameRef.touched){
+            <div class="error">
+              @if(blognameRef.errors?.['required']){<small>Blog Name is required</small>}
+              @if(blognameRef.errors?.['minlength']){<small>Minimum 3 chaaracter is required</small>}
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="title">Blog Title</label> 
+          <input type="text" id="title" name="title" required minlength="10" #titleRef="ngModel" placeholder="Blog Title" [ngModel]="tempBlog?.title">
+          @if(titleRef.invalid && titleRef.touched){
+            <div class="error">
+              @if(titleRef.errors?.['required']){<small>Blog Title is required</small>}
+              @if(titleRef.errors?.['minlength']){<small>Minimum 10 chaaracter is required</small>}
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" #dateRef="ngModel" required [ngModel]="tempBlog?.date">
+          @if(dateRef.invalid && dateRef.touched){
+            <div class="error">
+              @if(dateRef.errors?.['required']){<small>Date is required</small>}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="about">Information in Detail</label>
+          <textarea id="about" name="about" placeholder="Share details..." required minlength="30" #aboutRef="ngModel" [ngModel]="tempBlog?.about"></textarea>
+          @if(aboutRef.invalid && aboutRef.touched){
+            <div class="error">
+              @if(aboutRef.errors?.['required']){<small>Information is required</small>}
+              @if(aboutRef.errors?.['minlength']){<small>Minimum 30 chaaracter is required</small>}
+            </div>
+          }
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" name="tags" #tagRef="ngModel" required placeholder="Tags (comma separated)" [ngModel]="tempBlog?.tags">
+          @if(tagRef.invalid && tagRef.touched){
+            <div class="error">
+              @if(tagRef.errors?.['required']){<small>Blog Title is required</small>}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="red" (click)="assignDef()">Default values</button>
+        @if (!isUp) {
+          <button type="button" [disabled]="BlogForm.invalid" (click)="getData(BlogForm.value, BlogForm)">Create Blog</button>
+        }
+        @else {
+          <button type="button" [disabled]="BlogForm.invalid" (click)="updateData(BlogForm.value, BlogForm)">Update Blog</button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Blog Cards -->
+  <div class="blog-section">
+    <h4>Your Blogs</h4>
+    <p class="subtext">We will show your blogs here.</p>
+
+    <div class="card-grid">
+      @for (blg of allBlogs; track $index) {
+        <div class="card">
+  <h5>{{ blg.blogname }}</h5>
+  <div class="date">{{ blg.date }}</div>
+  <p class="description">{{ blg.title }}</p>
+  <div class="tags">{{ blg.tags }}</div>
+
+  <!-- Blog Details (static, fully visible) -->
+  <p class="details">
+    {{ blg.about }}
+  </p>
+
+  <button (click)="delBlog(blg.id)">Delete</button>
+  <button (click)="getUser(blg.id)">Update</button>
+</div>
+
+      }
+    </div>
+  </div>
+
+</body>

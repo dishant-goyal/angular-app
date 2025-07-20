@@ -1,0 +1,85 @@
+<div class="body">
+    <div class="container" [ngClass]="makeloginV ? 'active' :'' " id="container">
+        <div class="form-container sign-up">
+            <form #registerForm="ngForm">
+                <h1>Create Account</h1>
+                <!-- <div class="social-icons">
+                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div> -->
+                <span>or use your email for registeration</span>
+                <input type="text" placeholder="Name" #nameRef="ngModel" required name="name"
+                    [(ngModel)]="registerObj.name">
+                @if(nameRef.invalid && nameRef.touched){
+                <div class="error">
+                    @if(nameRef.errors?.['required']){<small>Name is required</small>}
+                </div>
+                }
+                <input type="email" placeholder="Email" name="email" #emailRef="ngModel" required
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" [(ngModel)]="registerObj.email">
+                @if(emailRef.invalid && emailRef.touched){
+                <div class="error">
+                    @if(emailRef.errors?.['required']){<small>Email is required</small>}
+                    @if(emailRef.errors?.['pattern']){<small>Please enter a valid email</small>}
+                </div>
+                }
+                @if(regError){
+                    <small class="error">this username is already registered!</small>
+                }
+                <input type="password" placeholder="Password" #passRef="ngModel" required minlength="3" name="passward" [(ngModel)]="registerObj.passward">
+                 @if(passRef.invalid && passRef.touched){
+                <div class="error">
+                    @if(passRef.errors?.['required']){<small>Password is required</small>}
+                    @if(passRef.errors?.['minlength']) {
+                        <small>passward must contains 3 character</small>
+                    }
+                </div>
+            }
+
+                <button [disabled]="registerForm.invalid" (click)="onRegister(registerForm)">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in">
+            <form #loginForm="ngForm">
+                <h1>Sign In</h1>
+                <div class="social-icons">
+                    <!-- <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a> -->
+                </div>
+                <span>or use your email password</span>
+                <input type="email" name="email" placeholder="Email" #emailReff="ngModel" required [(ngModel)]="loginObj.email">
+                 @if(emailReff.invalid && emailReff.touched){
+                <div class="error">
+                    @if(emailReff.errors?.['required']){<small>Email is required</small>}
+                </div>
+                }
+                <input type="password" name="passward" placeholder="Password" #passReff="ngModel"  required [(ngModel)]="loginObj.passward">
+                 @if(passReff.invalid && passReff.touched){
+                <div class="error">
+                    @if(passReff.errors?.['required']){<small>Password is required</small>}
+                </div>
+                }
+                <!-- <a href="#">→ Forget Your Password? ←</a> -->
+                <button [disabled]="loginForm.invalid" (click)="onLogin(loginForm)">Sign In</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome Back!</h1>
+                    <p>Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login" (click)="makeloginV=false">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register" (click)="makeloginV=true">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

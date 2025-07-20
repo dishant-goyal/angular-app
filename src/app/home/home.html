@@ -1,0 +1,54 @@
+<body>
+    <article>
+        <!-- ✅ NAVIGATION BAR -->
+        <nav class="navbar">
+            <ul>
+                <a id="left">Home</a>
+                @if (loggedUser) {
+                <a routerLink="/myblogs">My Blogs</a>
+                }
+                @else {
+                <a routerLink="" (click)="notlg()">My Blogs</a>
+                }
+
+
+                @if (loggedUser == undefined) {
+                <a routerLink="/login">Login</a>
+                }
+                @else {
+                <a class="logU">{{ loggedUser.email }}</a>
+                <a class="logU"><button (click)="onLogout()">Log out</button></a>
+                }
+
+
+            </ul>
+        </nav>
+
+        <!-- ✅ PAGE HEADING -->
+        <h1 class="page-heading fade-in">Discover New Worlds</h1>
+
+        <!-- ✅ BLOG CARD GRID -->
+        <div class="card-grid fade-in-2">
+            @for (blg of blogArray; track $index) {
+            <div class="card">
+                <h4>{{ blg.blogname }}</h4>
+                <div class="date">{{ blg.date }}</div>
+                <p class="description">{{ blg.title }}</p>
+                <div class="tags">
+                    <span *ngFor="let tag of blg.tags.split(',')">{{ tag.trim() }}</span>
+                </div>
+                <p class="details">{{ blg.about }}</p>
+            </div>
+            }
+        </div>
+
+        <!-- ✅ FOOTER -->
+        <div class="footer">
+            <p>Goyal Products © <span>
+                    <script>document.write(/\d{4}/.exec(Date())[0])</script>
+                </span></p>
+        </div>
+    </article>
+</body>
+
+<router-outlet></router-outlet>

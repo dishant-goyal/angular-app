@@ -1,0 +1,33 @@
+  <body>
+        <article>
+            <nav>
+                <ul>
+                    @if(loggedUser==undefined){
+                        <a routerLink="/login">Login</a>
+                    }
+                    @else{
+                        <a class="logU"><button (click)="onLogout()">log out</button></a>
+                        <a class="logU">{{loggedUser.email}}</a>
+                    }
+                    <a href=""></a>
+                    <a href=""></a>
+                    <!-- <a href="">Contacts</a> -->
+                    <!-- <a href="">Information</a> -->
+                    <a href="">My Blogs</a>
+                    <a href="" id="left">Home</a>
+                </ul>
+            </nav>
+            <h1 class="fade-in">Discover New Worlds</h1>
+            <div id="content" class="fade-in-2">
+                <ul type="none">
+                    <li><a >Culture</a></li>
+                    <li><a >History</a></li>
+                    <li><a>Legacy</a></li>
+                </ul>
+            </div>
+            <div class="footer">
+                <p>Goyal Products © <span><script>document.write(/\d{4}/.exec(Date())[0])</script>
+                </span></p>
+            </div>
+        </article>
+    </body>
